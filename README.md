@@ -1,109 +1,145 @@
  
 ![logo_plugfy_core_foundation_256x55](https://github.com/user-attachments/assets/a03e7fde-dcf1-42be-8c10-2922996f39c4)
 
-**Plugfy Core** is an open-source framework developed by the **Plugfy Foundation** to simplify, standardize, and accelerate the development of complex systems. 
-Its modular and scalable architecture enables the creation of flexible, dynamic, and highly reusable applications by efficiently and transparently integrating modules and business workflows.
+# Plugfy Core Extension Library Runner for .NET
+
+## Overview
+The **Plugfy Core Extension Library Runner for .NET** is a command-line tool designed to dynamically load and execute .NET assemblies. It facilitates inter-process communication and allows users to list available assemblies, obtain detailed metadata, and execute methods within assemblies.
+
+This tool is part of the **Plugfy Core** ecosystem, providing a standardized approach to managing dynamic module execution in .NET applications.
 
 ---
 
-## **The Origin of Plugfy**
-The **Plugfy** project was born in **2017**, within an industrial context, to address the challenges of integration and communication between different systems, business rules, and heterogeneous environments. 
-Initially focused on negotiation flows and customizable modules, it quickly became a powerful solution for managing complexity in corporate environments.
-
-In **2023**, the framework was completely modernized, introducing a new architecture focused on **work pipelines**, **distributed execution**, and **extensibility**. This evolution expanded its capabilities to operate at the system level and in virtualized environments, making it ideal for modern IT scenarios.
+## Features
+- **List Available Assemblies**: Retrieve a list of all dynamically loadable assemblies.
+- **Get Assembly Metadata**: Extract class, method, event, and field details from assemblies.
+- **Execute Methods Dynamically**: Invoke methods within loaded assemblies, supporting constructor parameters and runtime event subscription.
+- **Interactive Mode**: Run the tool interactively for real-time command execution.
+- **Multiple Communication Modes**: Supports different inter-process communication mechanisms (e.g., STDInOut, NamedPipes).
+- **Extensible Logging and Caller Communication**: Configurable logging and communication extensions via JSON parameters.
 
 ---
 
-## **Architecture of Plugfy Core**
+## Installation
+### **Prerequisites**
+- .NET SDK 6.0 or later
+- Windows, Linux, or macOS
 
-### **High-Level Design**
-
-```
-Plugfy Core
-├── Kernel
-│   ├── Event Manager          (Manages system and custom events)
-│   ├── Module Loader          (Dynamically loads and manages modules)
-│   ├── Execution Engine       (Orchestrates workflows and pipelines)
-│   └── Configuration Manager  (Manages system and module configurations)
-├── Modules
-│   ├── Core Modules
-│   │   ├── IF                (Conditional logic handler)
-│   │   ├── SwitchCase        (Decision-making logic handler)
-│   │   ├── ForEach           (Iterative execution handler)
-│   │   └── Pipeline          (Workflow execution handler)
-│   └── Custom Modules         (User-defined modules)
-└── External Interfaces        (Exposes REST APIs for module interaction)
+### **Building the Project**
+Clone the repository and navigate to the project folder:
+```sh
+ git clone https://github.com/plugfy/plugfy-core-extension-library-runner-dotnet.git
+ cd plugfy-core-extension-library-runner-dotnet
 ```
 
----
+Build the project using .NET CLI:
+```sh
+ dotnet build -c Release
+```
 
-## **Use Cases**
-
-### **1. System Integration**
-- **Scenario**: Integrate an ERP with a CRM and a logistics system to automate order processing and tracking.
-- **Solution**:
-  - Use the `Pipeline` module to orchestrate workflows.
-  - Combine `SwitchCase` for decision-making and `ForEach` to iterate over batch orders.
-
-### **2. Automating Workflows**
-- **Scenario**: Automate data analysis from multiple sources and generate real-time reports.
-- **Solution**:
-  - Use the `ForEach` module to iterate over data sources.
-  - Deploy a custom module to analyze data and a logging module to track the process.
+Run the executable from the output directory:
+```sh
+ dotnet run -- list
+```
 
 ---
 
-## **Examples**
+## Usage
+### **Command Structure**
+The tool uses a **command-based interface** where commands are specified as verbs:
+```sh
+ Plugfy.Core.Extension.Library.Runner.DotNet8 <command> [options]
+```
 
-### **Example 1: Creating a Simple Module**
-```csharp
-using Plugfy.Foundation.Core.Module;
+### **Available Commands**
+#### **1. Listing Available Assemblies**
+```sh
+ Plugfy.Core.Extension.Library.Runner.DotNet8 list
+```
+**Options:**
+- `-t, --communicationType` *(optional)*: Communication method (e.g., `STDInOut`, `NamedPipes`)
+- `-i, --interactive` *(optional)*: Enables interactive mode
+- `-c, --caller` *(optional)*: Caller extensions configuration in JSON format
+- `-l, --log` *(optional)*: Log extensions configuration in JSON format
 
-var simpleModule = new Module("SimpleModule");
-var simpleFunction = new Function("PrintMessage");
+#### **2. Getting Assembly Information**
+```sh
+ Plugfy.Core.Extension.Library.Runner.DotNet8 info '{"AssemblyName": "MyLibrary.dll"}'
+```
+**Options:**
+- `-t, --communicationType` *(optional)*: Communication method
+- `-i, --interactive` *(optional)*: Enables interactive mode
+- `-c, --caller` *(optional)*: Caller extensions configuration in JSON format
+- `-l, --log` *(optional)*: Log extensions configuration in JSON format
 
-simpleFunction.Execute = (parameters) =>
+#### **3. Running a Method in an Assembly**
+```sh
+ Plugfy.Core.Extension.Library.Runner.DotNet8 run '{"AssemblyName": "MyLibrary.dll", "Class": "MyNamespace.MyClass", "Method": "MyMethod", "Parameters": ["arg1", 42]}'
+```
+**Options:**
+- `-t, --communicationType` *(optional)*: Communication method
+- `-i, --interactive` *(optional)*: Enables interactive mode
+- `-c, --caller` *(optional)*: Caller extensions configuration in JSON format
+- `-l, --log` *(optional)*: Log extensions configuration in JSON format
+
+---
+
+## Configuration
+The application relies on `appsettings.json` for configuration. Below is an example:
+```json
 {
-    var message = parameters.ContainsKey("Message") ? parameters["Message"] : "Hello, Plugfy!";
-    Console.WriteLine(message);
-};
-
-simpleModule.AddFunction(simpleFunction);
-
-// Execute the function
-simpleFunction.Execute(new Dictionary<string, object> { { "Message", "Welcome to Plugfy Core!" } });
+  "Extensions": {
+    "Communications": {
+      "STDInOut": {
+        "LibrariesPath": "./Extensions/STDInOut"
+      },
+      "NamedPipes": {
+        "LibrariesPath": "./Extensions/NamedPipes"
+      }
+    }
+  },
+  "LibrariesPath": "./Assemblies"
+}
 ```
+### **Customizing Communication Extensions**
+- Define additional communication types in `appsettings.json`.
+- Ensure the corresponding `.dll` exists in the specified `LibrariesPath`.
 
-### **Example 2: Configuring and Running a Pipeline**
-```csharp
-using Plugfy.Foundation.Core.Module.Pipeline;
+---
 
-var dataPipeline = new Pipeline("DataPipeline");
-
-var step1Function = new Function("LoadData");
-step1Function.Execute = (parameters) => Console.WriteLine("Loading Data...");
-
-var step2Function = new Function("ProcessData");
-step2Function.Execute = (parameters) => Console.WriteLine("Processing Data...");
-
-var step1 = new PipelineStep("Step1", false, step1Function, step2Function);
-
-dataPipeline.AddStep(step1);
-dataPipeline.Execute();
+## Example Workflows
+### **Example 1: Listing Assemblies**
+```sh
+Plugfy.Core.Extension.Library.Runner.DotNet8 list -t NamedPipes
+```
+### **Example 2: Retrieving Assembly Information**
+```sh
+Plugfy.Core.Extension.Library.Runner.DotNet8 info '{"AssemblyName": "MyLibrary.dll"}'
+```
+### **Example 3: Executing a Method in an Assembly**
+```sh
+Plugfy.Core.Extension.Library.Runner.DotNet8 run '{"AssemblyName": "MyLibrary.dll", "Class": "MyNamespace.MyClass", "Method": "SayHello", "Parameters": ["World"]}'
 ```
 
 ---
 
-## **Next Steps**
-**Plugfy Core** is a living platform, constantly evolving. Our goals are to:
-- **Expand capabilities**.
-- **Integrate new technologies**.
-- **Build a collaborative community** that drives technological innovation.
-
-**Join us** on this journey to transform the development of complex systems.  
-**Plugfy Core**: The foundation for the modular future.
+## License
+This project is licensed under the **GNU General Public License v3.0**. See [GNU GPL v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) for details.
 
 ---
 
-## **License**
-Plugfy Core is licensed under the **GNU General Public License v3.0**. For more information, see [GNU GPL v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html).
+## Contributing
+We welcome contributions! To contribute:
+1. Fork the repository.
+2. Create a new feature branch (`git checkout -b feature-new`).
+3. Commit changes (`git commit -m "Added new feature"`).
+4. Push to the branch (`git push origin feature-new`).
+5. Submit a Pull Request.
+
+For major changes, open an issue first to discuss the proposed changes.
+
+---
+
+## Contact
+For inquiries, feature requests, or issues, please open a GitHub issue or contact the **Plugfy Foundation**.
+
