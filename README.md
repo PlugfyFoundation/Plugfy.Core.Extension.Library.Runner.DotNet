@@ -1,5 +1,5 @@
  
-![logo_plugfy_core_foundation_256x55](https://github.com/user-attachments/assets/a03e7fde-dcf1-42be-8c10-2922996f39c4)
+![logo_plugfy_core_foundation_256x55](https://raw.githubusercontent.com/PlugfyFoundation/Plugfy.Core/refs/heads/main/plugfy-core-fundation-header.png)
 
 # Plugfy Core Extension Library Runner for .NET
 
