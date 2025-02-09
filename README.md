@@ -48,13 +48,13 @@ Run the executable from the output directory:
 ### **Command Structure**
 The tool uses a **command-based interface** where commands are specified as verbs:
 ```sh
- Plugfy.Core.Extension.Library.Runner.DotNet8 <command> [options]
+ Plugfy.Core.Extension.Library.Runner.DotNet <command> [options]
 ```
 
 ### **Available Commands**
 #### **1. Listing Available Assemblies**
 ```sh
- Plugfy.Core.Extension.Library.Runner.DotNet8 list
+ Plugfy.Core.Extension.Library.Runner.DotNet list
 ```
 **Options:**
 - `-t, --communicationType` *(optional)*: Communication method (e.g., `STDInOut`, `NamedPipes`)
@@ -64,7 +64,7 @@ The tool uses a **command-based interface** where commands are specified as verb
 
 #### **2. Getting Assembly Information**
 ```sh
- Plugfy.Core.Extension.Library.Runner.DotNet8 info '{"AssemblyName": "MyLibrary.dll"}'
+ Plugfy.Core.Extension.Library.Runner.DotNet info '{"AssemblyName": "MyLibrary.dll"}'
 ```
 **Options:**
 - `-t, --communicationType` *(optional)*: Communication method
@@ -74,7 +74,7 @@ The tool uses a **command-based interface** where commands are specified as verb
 
 #### **3. Running a Method in an Assembly**
 ```sh
- Plugfy.Core.Extension.Library.Runner.DotNet8 run '{"AssemblyName": "MyLibrary.dll", "Class": "MyNamespace.MyClass", "Method": "MyMethod", "Parameters": ["arg1", 42]}'
+ Plugfy.Core.Extension.Library.Runner.DotNet run '{"AssemblyName": "MyLibrary.dll", "Class": "MyNamespace.MyClass", "Method": "MyMethod", "Parameters": ["arg1", 42]}'
 ```
 **Options:**
 - `-t, --communicationType` *(optional)*: Communication method
@@ -110,15 +110,15 @@ The application relies on `appsettings.json` for configuration. Below is an exam
 ## Example Workflows
 ### **Example 1: Listing Assemblies**
 ```sh
-Plugfy.Core.Extension.Library.Runner.DotNet8 list -t NamedPipes
+Plugfy.Core.Extension.Library.Runner.DotNet list -t NamedPipes
 ```
 ### **Example 2: Retrieving Assembly Information**
 ```sh
-Plugfy.Core.Extension.Library.Runner.DotNet8 info '{"AssemblyName": "MyLibrary.dll"}'
+Plugfy.Core.Extension.Library.Runner.DotNet info '{"AssemblyName": "MyLibrary.dll"}'
 ```
 ### **Example 3: Executing a Method in an Assembly**
 ```sh
-Plugfy.Core.Extension.Library.Runner.DotNet8 run '{"AssemblyName": "MyLibrary.dll", "Class": "MyNamespace.MyClass", "Method": "SayHello", "Parameters": ["World"]}'
+Plugfy.Core.Extension.Library.Runner.DotNet run '{"AssemblyName": "MyLibrary.dll", "Class": "MyNamespace.MyClass", "Method": "SayHello", "Parameters": ["World"]}'
 ```
 
 ---

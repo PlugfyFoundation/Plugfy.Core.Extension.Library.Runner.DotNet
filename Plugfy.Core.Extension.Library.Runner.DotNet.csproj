@@ -10,14 +10,14 @@
     <ApplicationIcon>plugfy.core.ico</ApplicationIcon>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <SignAssembly>False</SignAssembly>
-    <Title>Plugfy.Core.Extension.Library.Runner.DotNet8</Title>
+    <SignAssembly>True</SignAssembly>
+    <Title>Plugfy.Core.Extension.Library.Runner.DotNet</Title>
     <Authors>Plugfy</Authors>
     <Company>Plugfy</Company>
     <PackageProjectUrl>https://plugfy.org</PackageProjectUrl>
     <PackageIcon>plugfy-core-logo-128x128.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/PlugfyFoundation/Plugfy.Core.Extension.Library.Runner.DotNet8</RepositoryUrl>
+    <RepositoryUrl>https://github.com/PlugfyFoundation/Plugfy.Core.Extension.Library.Runner.DotNet</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
   </PropertyGroup>
@@ -49,7 +49,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Plugfy.Core.Commons" Version="1.0.9" />
+    <PackageReference Include="Plugfy.Core.Commons.Communication" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>
