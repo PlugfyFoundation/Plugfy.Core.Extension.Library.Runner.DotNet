@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Plugfy.Core.Extension.Library.Runner.DotNet": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
