@@ -1,0 +1,7 @@
+services:
+  plugfy.core.extension.library.runner.dotnet:
+    image: ${DOCKER_REGISTRY-}plugfy/core-runner-dotnet
+    build:
+      context: .
+      dockerfile: Dockerfile
+
