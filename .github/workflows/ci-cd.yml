@@ -32,3 +32,9 @@ jobs:
 
       - name: 🔑 Publish to NuGet
         run: dotnet nuget push "nupkg/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+
+      # - name: 🐳 Build and push Docker Hub
+      #   run: |
+      #     docker build -t ${{ secrets.DOCKER_REGISTRY }}plugfy/core-runner-dotnet:1.0.${{ github.run_number }} .
+      #     docker push ${{ secrets.DOCKER_REGISTRY }}plugfy/core-runner-dotnet:1.0.${{ github.run_number }}
+      #     docker tag ${{ secrets.DOCKER_REGISTRY }}plugfy/core-runner-dotnet:1.0.${{ github.run_number }} ${{ secrets.DOCKER_REGISTRY }}plugfy/core-runner-dotnet:latest

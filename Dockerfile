@@ -13,10 +13,7 @@ RUN apt-get update && apt-get install -y tzdata
 
 WORKDIR /app
 COPY --from=publish /app/publish .
-#COPY --from=build  /src/Workspaces/ /app/Workspaces/
-
 
 ENV PATH=$PATH:/app
 
-EXPOSE 5000
 ENTRYPOINT ["./runner"]
