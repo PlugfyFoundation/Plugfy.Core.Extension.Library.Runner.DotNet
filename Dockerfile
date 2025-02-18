@@ -1,8 +1,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY . .
-RUN dotnet restore
-RUN dotnet build -c Release -o /src/build
+RUN dotnet restore  "/src/Plugfy.Core.Extension.Library.Runner.DotNet.csproj"
+RUN dotnet build "/src/Plugfy.Core.Extension.Library.Runner.DotNet.csproj" -c Release -o /src/build
 
 WORKDIR /app
 FROM build AS publish
